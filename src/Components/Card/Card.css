@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  width: 48px;
+  height: 80px;
+  background-color: #FFF;
+  border-radius: $base-size;
+  border: 1px solid black;
+  margin: 16px;
+  padding: 4px;
+}
+
+.card-black {
+  color: black;
+}
+
+.card-red {
+  color: red;
+}
+
+.card-value {
+  font-size: 16px;
+}
+
+.card-suit {
+  .font-size: 8px;
+}
+
+.card-down {
+  display: flex;
+  flex-grow: 1;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+}
+
+.card-up {
+  flex-grow: 1;
+  transform:rotate(-180deg);
+}
