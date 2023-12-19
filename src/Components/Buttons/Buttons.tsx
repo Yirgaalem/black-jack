@@ -14,7 +14,11 @@ export default () => {
       <button className='stand' onClick={()=>{
         // No cards
       }}>Stand</button>
-    
+
+      <button className='split' onClick={()=>{
+        // Split into two hands and double money
+      }}>Split</button>
+
     </div>
   );
 }
