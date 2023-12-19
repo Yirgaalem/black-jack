@@ -1,13 +1,13 @@
 import Card from "../Card/Card";
+export const cardValues:string[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+export const cardSuits:string[] = ["♠︎", "♥︎", "♣︎", "♦︎"];
 
 export default () => {
-  const values:string[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-  const suits:string[] = ["♠︎", "♥︎", "♣︎", "♦︎"];
-
+  
   let deck: Map<string, JSX.Element> = new Map();
   
-  for (const value of values) {
-    for (const suit of suits) {
+  for (const value of cardValues) {
+    for (const suit of cardSuits) {
       let id:number;
       
       if (value == 'A') {
@@ -25,4 +25,12 @@ export default () => {
   }
 
   return deck;
+}
+export function getRandomValue(): number {
+
+  return Math.floor(Math.random() * (cardValues.length - 1));
+}
+
+export function getRandomSuit(): number {
+  return Math.floor(Math.random() * (cardSuits.length - 1));
 }
