@@ -14,10 +14,10 @@ export default () => {
       <div>
         <Player/>
       </div>
-      
+{/*       
       <div>
         <Buttons/>
-      </div>
+      </div> */}
     </>
   );
 }
