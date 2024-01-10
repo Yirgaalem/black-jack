@@ -4,6 +4,7 @@ import { cardValues, cardSuits, getRandomValue, getRandomSuit } from "../Deck/De
 import './Player.css'
 
 export default () => {
+
   const cardOne: number[] = getCard();
   let cardOneValue: number = cardOne[0];
   let cardOneSuit: number = cardOne[1];
@@ -20,20 +21,46 @@ export default () => {
       <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/>
     </>
   );
-
-  const [playerHand, setPlayerHand] = useState(playerCards)
-  useEffect(()=> {
-
-  },[]);
-
-  const [playerScore, setPlayerScore] = useState(cardOneID + cardTwoID);
+  const [numCards, setNumCards] = useState(0);
+  const [playerHand, setPlayerHand] = useState(playerCards)  
   
+  const [playerScore, setPlayerScore] = useState(`${cardOneID + cardTwoID}`);
+
+  console.log(cardOneID, cardTwoID)
+
+  if (cardOneID == 1 || cardTwoID == 1) {
+
+    if (playerScore == "11" ) {
+      //setScreen to black Jack
+      console.log("Black Jack!");
+      setPlayerScore("21");
+    } 
+    
+    else if (Number(playerScore) < 21) {
+      setPlayerScore(`${playerScore} / ${Number(playerScore)+10}`)
+    } 
+
+    else {
+      setPlayerScore(playerScore)
+    }
+  }
+  
+  if (Number(playerScore) > 21) {
+    // setScreen to loser
+    console.log("Bust");
+  } 
+  
+  else if (Number(playerScore) == 21) {
+    // setScreen to winner
+    console.log("dont allow more hits");
+  }
+
+  //can use numCards to determine when user can double and split (if num Cards == 2) and see if it is a black jack or just 21 (if we need to)
   return (
     <>
+    
       <div>
         <div className = 'cards'>
-          {/* <Card id = {cardOneID} value = {cardValues[cardOneValue]} suit = {cardSuits[cardOneSuit]}/>
-          <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/> */}
           {playerHand}
         </div>
 
@@ -41,16 +68,22 @@ export default () => {
       </div>
 
       <div className='buttons'>
-        <button className='double' onClick={() => double(playerHand, 
+        <button className='double' onClick={() => double(numCards,
+                                                        setNumCards,
+                                                        playerHand, 
                                                         setPlayerHand, 
                                                         playerScore, 
-                                                        setPlayerScore)
+                                                        setPlayerScore
+                                                        )
                                                         }>Double</button> 
                                                       
-        <button className='hit' onClick={() => hit(playerHand, 
+        <button className='hit' onClick={() => hit(numCards,
+                                                  setNumCards,
+                                                  playerHand, 
                                                   setPlayerHand, 
-                                                  playerScore,
-                                                  setPlayerScore)
+                                                  playerScore, 
+                                                  setPlayerScore
+                                                  )
                                                   }>Hit</button>
 
         <button className='stand' onClick={stand}>Stand</button>
@@ -61,7 +94,6 @@ export default () => {
   );
 }
 
-
 function getCard(): number[] {
   let cardValue: number = getRandomValue();
   let cardSuit: number = getRandomSuit();
@@ -71,10 +103,11 @@ function getCard(): number[] {
 
 }
 
-
-function double(playerHand: JSX.Element, 
+function double(numCards: number,
+                setNumCards: Function,
+                playerHand: JSX.Element, 
                 setPlayerHand: Function,
-                playerScore: number,
+                playerScore: string,
                 setPlayerScore: Function) {
 // add one card and then stand and double money. move onto dealer after.
   const card: number[] = getCard();
@@ -90,13 +123,17 @@ function double(playerHand: JSX.Element,
     </>
   );
 
-  setPlayerScore(playerScore+cardID);
+  setPlayerScore(`${Number(playerScore)+cardID}`);
+
+  setNumCards(numCards + 1);
 }
 
-function hit(playerHand: JSX.Element, 
-            setPlayerHand: Function,
-            playerScore: number,
-            setPlayerScore: Function) {
+function hit(numCards: number,
+             setNumCards: Function,
+             playerHand: JSX.Element, 
+             setPlayerHand: Function,
+             playerScore: string,
+             setPlayerScore: Function) {
 
   const card: number[] = getCard();
 
@@ -110,7 +147,10 @@ function hit(playerHand: JSX.Element,
       <Card id = {cardID} value = {cardValues[cardValue]} suit = {cardSuits[cardSuit]}/>
     </>
   );
-  setPlayerScore(playerScore+cardID);
+
+  setPlayerScore(`${Number(playerScore)+cardID}`);
+  
+  setNumCards(numCards + 1);
 }
 
 function stand() {
