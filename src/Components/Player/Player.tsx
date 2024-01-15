@@ -101,7 +101,7 @@ export default (props: playerProps) => {
                                                   )
                                                   }>Hit</button>
 
-        <button className='stand' onClick={stand}>Stand</button>
+        <button className='stand' onClick={() => stand(setPlayerScore, playerScore)}>Stand</button>
 
         {splitButton}
       </div>

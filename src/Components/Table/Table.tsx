@@ -43,9 +43,6 @@ export default () => {
   return (
     <>
     {outcome}
-      {/* <LoserScreen/>
-      <WinnerScreen/>
-      <BlackJackScreen/> */}
       <div className='dealerCards'>
        <Dealer cardOne={dealerCardOne}
                cardTwo={dealerCardTwo}

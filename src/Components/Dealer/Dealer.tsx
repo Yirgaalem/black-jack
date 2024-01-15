@@ -33,24 +33,11 @@ export default (props: dealerProps) => {
   
   const [dealerScore, setDealerScore] = useState(`${cardOneID + cardTwoID}`);
 
-  console.log(cardOneID, cardTwoID)
-  
-  function dealerPlay() {
-    // Dealer takes cards until 17 (soft or hard) and stops, if above 21, they bust 
-    while (Number(dealerScore) < 17) {
-      hit(
-        dealerHand, 
-        setDealerHand, 
-        dealerScore, 
-        setDealerScore
-        );
-    }
-  }
+  // dealerPlay(dealerHand, setDealerHand, dealerScore, setDealerScore); 
 
   if (cardOneID == 1 || cardTwoID == 1) {
 
     if (dealerScore == "11" ) {
-      console.log("Black Jack!");
       // props.setDealerOutcome('dealerBlackJack');
       setDealerScore("21");
       stand(props.dealerScore, dealerScore);
@@ -58,6 +45,7 @@ export default (props: dealerProps) => {
     
     else if (Number(dealerScore) < 21) {
       setDealerScore(`${dealerScore} / ${Number(dealerScore)+10}`);
+
       if (Number(dealerScore)+10 > 17) {
         stand(props.dealerScore, dealerScore);
       }
@@ -125,4 +113,20 @@ function stand(setDealerScore: Function,
                dealerScore: string) {
   // no more cards -> move onto dealer 
   setDealerScore(Number(dealerScore));
+}
+
+export function dealerPlay(dealerHand: JSX.Element, 
+                    setDealerHand: Function, 
+                    dealerScore: string, 
+                    setDealerScore: Function) {
+    console.log(dealerScore)
+  // while (Number(dealerScore) < 17) {
+    hit(
+      dealerHand, 
+      setDealerHand, 
+      dealerScore, 
+      setDealerScore
+      );
+  // }
+  console.log(dealerScore);
 }
