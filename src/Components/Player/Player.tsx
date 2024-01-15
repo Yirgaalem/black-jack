@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "../Card/Card";
 import { cardValues, cardSuits, getRandomValue, getRandomSuit } from "../Deck/Deck";
 import './Player.css'
 
-export default () => {
+export type playerProps = {
+  cardOne: number[],
+  cardTwo: number[],
+  setPlayerOutcome: Function,
+  playerScore: Function
+}
 
-  const cardOne: number[] = getCard();
-  let cardOneValue: number = cardOne[0];
-  let cardOneSuit: number = cardOne[1];
-  let cardOneID: number = cardOne[2];
+export default (props: playerProps) => {
 
-  const cardTwo: number[] = getCard();
-  let cardTwoValue: number = cardTwo[0];
-  let cardTwoSuit: number = cardTwo[1];
-  let cardTwoID: number = cardTwo[2];
+  const cardOne: number[] = props.cardOne;
+  const cardOneValue: number = cardOne[0];
+  const cardOneSuit: number = cardOne[1];
+  const cardOneID: number = cardOne[2];
+
+  const cardTwo: number[] = props.cardTwo;
+  const cardTwoValue: number = cardTwo[0];
+  const cardTwoSuit: number = cardTwo[1];
+  const cardTwoID: number = cardTwo[2];
 
   const playerCards: JSX.Element = (
     <>
@@ -21,19 +28,20 @@ export default () => {
       <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/>
     </>
   );
-  const [numCards, setNumCards] = useState(0);
-  const [playerHand, setPlayerHand] = useState(playerCards)  
   
+  const [numCards, setNumCards] = useState(2);
+  const [playerHand, setPlayerHand] = useState(playerCards)  
+
   const [playerScore, setPlayerScore] = useState(`${cardOneID + cardTwoID}`);
 
-  console.log(cardOneID, cardTwoID)
+  console.log(cardOneID, cardTwoID);
 
   if (cardOneID == 1 || cardTwoID == 1) {
 
-    if (playerScore == "11" ) {
-      //setScreen to black Jack
-      console.log("Black Jack!");
+    if (playerScore == "11") {
+      props.setPlayerOutcome('BlackJack');
       setPlayerScore("21");
+      stand(props.playerScore, playerScore);
     } 
     
     else if (Number(playerScore) < 21) {
@@ -46,16 +54,30 @@ export default () => {
   }
   
   if (Number(playerScore) > 21) {
-    // setScreen to loser
-    console.log("Bust");
+    props.setPlayerOutcome('Bust');
+    stand(props.playerScore, playerScore);
   } 
   
   else if (Number(playerScore) == 21) {
-    // setScreen to winner
-    console.log("dont allow more hits");
+    stand(props.playerScore, playerScore);
   }
+  
+  let splitButton: JSX.Element = (<button className='split' onClick={split}>Split</button>);;
+  let doubleButton: JSX.Element = (<button className='double' onClick={() => double(numCards,
+                             setNumCards,
+                             playerHand, 
+                             setPlayerHand, 
+                             playerScore, 
+                             setPlayerScore
+                             )
+                             }>Double</button> 
+                          );
 
-  //can use numCards to determine when user can double and split (if num Cards == 2) and see if it is a black jack or just 21 (if we need to)
+  if (numCards > 2) {
+    splitButton = (<></>)
+    doubleButton = (<></>)
+  }
+  
   return (
     <>
     
@@ -68,14 +90,7 @@ export default () => {
       </div>
 
       <div className='buttons'>
-        <button className='double' onClick={() => double(numCards,
-                                                        setNumCards,
-                                                        playerHand, 
-                                                        setPlayerHand, 
-                                                        playerScore, 
-                                                        setPlayerScore
-                                                        )
-                                                        }>Double</button> 
+        {doubleButton}
                                                       
         <button className='hit' onClick={() => hit(numCards,
                                                   setNumCards,
@@ -88,7 +103,7 @@ export default () => {
 
         <button className='stand' onClick={stand}>Stand</button>
 
-        <button className='split' onClick={split}>Split</button>
+        {splitButton}
       </div>
     </>
   );
@@ -153,12 +168,14 @@ function hit(numCards: number,
   setNumCards(numCards + 1);
 }
 
-function stand() {
-// no more cards -> move onto dealer 
-console.log('stand')
+function stand(setPlayerScore: Function, 
+               playerScore: string) {
+  setPlayerScore(Number(playerScore));
+  // dealerPlay();
 }
 
 function split() {
-// Split into two hands and double money
-console.log('split')
+  // Split into two hands and double money
+  console.log('split')
 }
+
