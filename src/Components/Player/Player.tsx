@@ -6,8 +6,9 @@ import './Player.css'
 export type playerProps = {
   cardOne: number[],
   cardTwo: number[],
-  setPlayerOutcome: Function,
-  playerScore: Function
+  // setPlayerOutcome: Function,
+  playerScore: Function,
+  setDealerTurn: Function,
 }
 
 export default (props: playerProps) => {
@@ -34,14 +35,15 @@ export default (props: playerProps) => {
 
   const [playerScore, setPlayerScore] = useState(`${cardOneID + cardTwoID}`);
 
-  console.log(cardOneID, cardTwoID);
 
   if (cardOneID == 1 || cardTwoID == 1) {
 
     if (playerScore == "11") {
-      props.setPlayerOutcome('BlackJack');
+      // props.setPlayerOutcome('BlackJack');
       setPlayerScore("21");
-      stand(props.playerScore, playerScore);
+      props.playerScore(0);
+      props.setDealerTurn(true);
+      stand(props.playerScore, playerScore, props.setDealerTurn);
     } 
     
     else if (Number(playerScore) < 21) {
@@ -54,24 +56,24 @@ export default (props: playerProps) => {
   }
   
   if (Number(playerScore) > 21) {
-    props.setPlayerOutcome('Bust');
-    stand(props.playerScore, playerScore);
+    stand(props.playerScore, playerScore, props.setDealerTurn);
   } 
   
   else if (Number(playerScore) == 21) {
-    stand(props.playerScore, playerScore);
+    stand(props.playerScore, playerScore, props.setDealerTurn);
   }
   
   let splitButton: JSX.Element = (<button className='split' onClick={split}>Split</button>);;
   let doubleButton: JSX.Element = (<button className='double' onClick={() => double(numCards,
-                             setNumCards,
-                             playerHand, 
-                             setPlayerHand, 
-                             playerScore, 
-                             setPlayerScore
-                             )
-                             }>Double</button> 
-                          );
+                                  setNumCards,
+                                  playerHand, 
+                                  setPlayerHand, 
+                                  playerScore, 
+                                  setPlayerScore,
+                                  props.setDealerTurn,
+                                  )
+                                  }>Double</button> 
+                                );
 
   if (numCards > 2) {
     splitButton = (<></>)
@@ -80,7 +82,6 @@ export default (props: playerProps) => {
   
   return (
     <>
-    
       <div>
         <div className = 'cards'>
           {playerHand}
@@ -101,7 +102,7 @@ export default (props: playerProps) => {
                                                   )
                                                   }>Hit</button>
 
-        <button className='stand' onClick={() => stand(setPlayerScore, playerScore)}>Stand</button>
+        <button className='stand' onClick={() => stand(setPlayerScore, playerScore, props.setDealerTurn)}>Stand</button>
 
         {splitButton}
       </div>
@@ -115,7 +116,6 @@ function getCard(): number[] {
   let cardID: number = cardValue < 10 ? cardValue + 1 : 10;
 
   return [cardValue, cardSuit, cardID];
-
 }
 
 function double(numCards: number,
@@ -123,7 +123,8 @@ function double(numCards: number,
                 playerHand: JSX.Element, 
                 setPlayerHand: Function,
                 playerScore: string,
-                setPlayerScore: Function) {
+                setPlayerScore: Function,
+                setDealerTurn: Function) {
 // add one card and then stand and double money. move onto dealer after.
   const card: number[] = getCard();
 
@@ -141,6 +142,7 @@ function double(numCards: number,
   setPlayerScore(`${Number(playerScore)+cardID}`);
 
   setNumCards(numCards + 1);
+  stand(setPlayerScore, playerScore, setDealerTurn);
 }
 
 function hit(numCards: number,
@@ -169,13 +171,14 @@ function hit(numCards: number,
 }
 
 function stand(setPlayerScore: Function, 
-               playerScore: string) {
+               playerScore: string,
+               setDealerTurn: Function) {
   setPlayerScore(Number(playerScore));
-  // dealerPlay();
+  setDealerTurn(true);
 }
 
 function split() {
   // Split into two hands and double money
-  console.log('split')
+  console.log('split');
 }
 

@@ -6,8 +6,9 @@ import './Dealer.css';
 export type dealerProps = {
   cardOne: number[],
   cardTwo: number[],
-  setDealerOutcome: Function,
-  dealerScore: Function
+  // setDealerOutcome: Function,
+  dealerScore: Function,
+  dealerTurn: Function,
 }
 
 export default (props: dealerProps) => {
@@ -32,37 +33,49 @@ export default (props: dealerProps) => {
   const [dealerHand, setDealerHand] = useState(dealerCards)  
   
   const [dealerScore, setDealerScore] = useState(`${cardOneID + cardTwoID}`);
-
-  // dealerPlay(dealerHand, setDealerHand, dealerScore, setDealerScore); 
-
+  
   if (cardOneID == 1 || cardTwoID == 1) {
 
     if (dealerScore == "11" ) {
       // props.setDealerOutcome('dealerBlackJack');
       setDealerScore("21");
-      stand(props.dealerScore, dealerScore);
+      stand(props.dealerScore, dealerScore, props.dealerTurn);
     } 
     
     else if (Number(dealerScore) < 21) {
       setDealerScore(`${dealerScore} / ${Number(dealerScore)+10}`);
 
       if (Number(dealerScore)+10 > 17) {
-        stand(props.dealerScore, dealerScore);
+        stand(props.dealerScore, dealerScore, props.dealerTurn);
       }
     } 
-
+    else if (Number(dealerScore) > 21) {
+      setDealerScore(`${dealerScore}`);
+    } 
     else {
       setDealerScore(dealerScore);
     }
   }
   
   if (Number(dealerScore) > 21) {
-    props.setDealerOutcome('dealerBust');
-    stand(props.dealerScore, dealerScore);
+    // props.setDealerOutcome('dealerBust');
+    stand(props.dealerScore, dealerScore, props.dealerTurn);
   } 
   
   else if (Number(dealerScore) >= 17) {
-    stand(props.dealerScore, dealerScore);
+    stand(props.dealerScore, dealerScore, props.dealerTurn);
+  }
+  
+  if (props.dealerTurn && Number(dealerScore) < 17) {
+    console.log("dealer turn");
+    hit(
+      dealerHand, 
+      setDealerHand, 
+      dealerScore, 
+      setDealerScore
+    );
+  } else {
+    stand(props.dealerScore, dealerScore, props.dealerTurn);
   }
 
   return (
@@ -106,27 +119,12 @@ function hit(dealerHand: JSX.Element,
   );
 
   setDealerScore(`${Number(dealerScore)+cardID}`);
-  
 }
 
 function stand(setDealerScore: Function, 
-               dealerScore: string) {
+               dealerScore: string,
+               dealerTurn: Function) {
   // no more cards -> move onto dealer 
   setDealerScore(Number(dealerScore));
-}
-
-export function dealerPlay(dealerHand: JSX.Element, 
-                    setDealerHand: Function, 
-                    dealerScore: string, 
-                    setDealerScore: Function) {
-    console.log(dealerScore)
-  // while (Number(dealerScore) < 17) {
-    hit(
-      dealerHand, 
-      setDealerHand, 
-      dealerScore, 
-      setDealerScore
-      );
-  // }
-  console.log(dealerScore);
+  dealerTurn(false);
 }
