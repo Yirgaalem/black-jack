@@ -6,7 +6,6 @@ import './Player.css'
 export type playerProps = {
   cardOne: number[],
   cardTwo: number[],
-  // setPlayerOutcome: Function,
   playerScore: Function,
   setDealerTurn: Function,
 }
@@ -39,11 +38,10 @@ export default (props: playerProps) => {
   if (cardOneID == 1 || cardTwoID == 1) {
 
     if (playerScore == "11") {
-      // props.setPlayerOutcome('BlackJack');
       setPlayerScore("21");
       props.playerScore(0);
       props.setDealerTurn(true);
-      stand(props.playerScore, playerScore, props.setDealerTurn);
+      // stand(props.playerScore, playerScore, props.setDealerTurn);
     } 
     
     else if (Number(playerScore) < 21) {
@@ -174,7 +172,7 @@ function stand(setPlayerScore: Function,
                playerScore: string,
                setDealerTurn: Function) {
   setPlayerScore(Number(playerScore));
-  setDealerTurn(true);
+  setDealerTurn(1);
 }
 
 function split() {

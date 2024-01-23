@@ -6,9 +6,8 @@ import './Dealer.css';
 export type dealerProps = {
   cardOne: number[],
   cardTwo: number[],
-  // setDealerOutcome: Function,
   dealerScore: Function,
-  dealerTurn: Function,
+  dealerTurn: Boolean,
 }
 
 export default (props: dealerProps) => {
@@ -37,17 +36,16 @@ export default (props: dealerProps) => {
   if (cardOneID == 1 || cardTwoID == 1) {
 
     if (dealerScore == "11" ) {
-      // props.setDealerOutcome('dealerBlackJack');
       setDealerScore("21");
-      stand(props.dealerScore, dealerScore, props.dealerTurn);
+      stand(props.dealerScore, dealerScore);
     } 
     
     else if (Number(dealerScore) < 21) {
       setDealerScore(`${dealerScore} / ${Number(dealerScore)+10}`);
 
       if (Number(dealerScore)+10 > 17) {
-        stand(props.dealerScore, dealerScore, props.dealerTurn);
-      }
+        stand(props.dealerScore, dealerScore);
+        }
     } 
     else if (Number(dealerScore) > 21) {
       setDealerScore(`${dealerScore}`);
@@ -58,16 +56,14 @@ export default (props: dealerProps) => {
   }
   
   if (Number(dealerScore) > 21) {
-    // props.setDealerOutcome('dealerBust');
-    stand(props.dealerScore, dealerScore, props.dealerTurn);
+    stand(props.dealerScore, dealerScore);
   } 
   
   else if (Number(dealerScore) >= 17) {
-    stand(props.dealerScore, dealerScore, props.dealerTurn);
+    stand(props.dealerScore, dealerScore);
   }
   
   if (props.dealerTurn && Number(dealerScore) < 17) {
-    console.log("dealer turn");
     hit(
       dealerHand, 
       setDealerHand, 
@@ -75,7 +71,7 @@ export default (props: dealerProps) => {
       setDealerScore
     );
   } else {
-    stand(props.dealerScore, dealerScore, props.dealerTurn);
+      stand(props.dealerScore, dealerScore);
   }
 
   return (
@@ -122,9 +118,8 @@ function hit(dealerHand: JSX.Element,
 }
 
 function stand(setDealerScore: Function, 
-               dealerScore: string,
-               dealerTurn: Function) {
-  // no more cards -> move onto dealer 
+               dealerScore: string){
+              //  dealerTurn: Boolean) {
   setDealerScore(Number(dealerScore));
-  dealerTurn(false);
+  // dealerTurn(false);
 }

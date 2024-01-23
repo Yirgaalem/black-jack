@@ -5,12 +5,11 @@ import Player from '../Player/Player';
 import LoserScreen from '../Screens/LoserScreen';
 import WinnerScreen from '../Screens/WinnerScreen';
 import BlackJackScreen from '../Screens/BlackJackScreen';
+import PushScreen from '../Screens/PushScreen';
 import './Table.css';
 
 export default () => {
-  
-  // const [playerOutcome, setPlayerOutcome] = useState('Playing');
-  // const [dealerOutcome, setDealerOutcome] = useState()
+
   const [playerScore, setPlayerScore] = useState(-1);
   const [dealerScore, setDealerScore] = useState(-1);
 
@@ -20,42 +19,36 @@ export default () => {
   const dealerCardOne: number[] = getCard();
   const dealerCardTwo: number[] = getCard();
   
+  const [dealerTurn, setDealerTurn] = useState(false);
+
   let outcome: JSX.Element = (
     <>
     </>
   );
+  console.log(dealerScore, playerScore)
 
-  // if (playerOutcome == "BlackJack") {
-  //   outcome = (
-  //     <BlackJackScreen/>
-  //   );
-  // } else if (playerOutcome == "Bust" || dealerScore > playerScore && playerOutcome != "dealerBust") {
-  //   outcome = (
-  //     <LoserScreen/>
-  //   );
-  // } else if (playerOutcome == "Winner" || playerOutcome == "dealerBust" || playerScore > dealerScore) {
-  //   outcome = (
-  //     <WinnerScreen/>
-  //   );
-  // }
-
-  // Will use 0 as black jack value 
-  if (playerScore == 0) {
-    outcome = (
-      <BlackJackScreen/>
-    );
-  } else if (playerScore > 21 || playerScore < dealerScore && dealerScore <= 21) {
-    console.log(dealerScore, playerScore)
-    outcome = (
-      <LoserScreen/>
-    );
-  } else if (playerScore > dealerScore && playerScore >= 21 || dealerScore > 21 && playerScore <= 21) {
-    outcome = (
-      <WinnerScreen/>
-    );
+  if (dealerTurn == true){
+    // console.log(dealerScore, playerScore)
+    // Will use 0 as black jack value 
+    if (playerScore == 0) {
+      outcome = (
+        <BlackJackScreen/>
+      );
+    } else if (playerScore > 21 || playerScore < dealerScore && dealerScore <= 21) {
+      outcome = (
+        <LoserScreen/>
+      );
+    } else if (playerScore > dealerScore && playerScore >= 21 || dealerScore > 21 && playerScore <= 21) {
+      outcome = (
+        <WinnerScreen/>
+      );
+    } else if (playerScore == dealerScore && playerScore <= 21 && dealerScore <= 21) {
+      outcome = (
+        <PushScreen/>
+      )
+    }
   }
 
-  const [dealerTurn, setDealerTurn] = useState(false);
 
   return (
     <>
@@ -63,16 +56,14 @@ export default () => {
       <div className='dealerCards'>
        <Dealer cardOne={dealerCardOne}
                cardTwo={dealerCardTwo}
-              //  setDealerOutcome={playerOutcome => setPlayerOutcome(playerOutcome)}
                dealerScore={dealerScore => setDealerScore(dealerScore)}
-               dealerTurn={dealerTurn => setDealerTurn(dealerTurn)}
+               dealerTurn={dealerTurn}
         />
       </div>
       
       <div>
         <Player cardOne={playerCardOne}
                 cardTwo={playerCardTwo}
-                // setPlayerOutcome={playerOutcome => setPlayerOutcome(playerOutcome)}
                 playerScore={playerScore => setPlayerScore(playerScore)}
                 setDealerTurn={dealerTurn => setDealerTurn(dealerTurn)}
         />
