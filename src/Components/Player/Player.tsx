@@ -100,7 +100,7 @@ export default (props: playerProps) => {
                                                   )
                                                   }>Hit</button>
 
-        <button className='stand' onClick={() => stand(setPlayerScore, playerScore, props.setDealerTurn)}>Stand</button>
+        <button className='stand' onClick={() => stand(props.playerScore, playerScore, props.setDealerTurn)}>Stand</button>
 
         {splitButton}
       </div>

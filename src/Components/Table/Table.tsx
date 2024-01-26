@@ -25,10 +25,8 @@ export default () => {
     <>
     </>
   );
-  console.log(dealerScore, playerScore)
 
-  if (dealerTurn == true){
-    // console.log(dealerScore, playerScore)
+  if (dealerTurn == true) {
     // Will use 0 as black jack value 
     if (playerScore == 0) {
       outcome = (
@@ -38,7 +36,7 @@ export default () => {
       outcome = (
         <LoserScreen/>
       );
-    } else if (playerScore > dealerScore && playerScore >= 21 || dealerScore > 21 && playerScore <= 21) {
+    } else if (playerScore > dealerScore && playerScore <= 21 || dealerScore > 21 && playerScore <= 21) {
       outcome = (
         <WinnerScreen/>
       );

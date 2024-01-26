@@ -1,5 +1,5 @@
 import './PushScreen.css';
-import Push from '../../assets/images/blackjack.gif';
+import Push from '../../assets/images/Push.gif';
 
 export default () => {
 
