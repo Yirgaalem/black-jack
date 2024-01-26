@@ -69,6 +69,7 @@ export default (props: playerProps) => {
                                   playerScore, 
                                   setPlayerScore,
                                   props.setDealerTurn,
+                                  props.playerScore,
                                   )
                                   }>Double</button> 
                                 );
@@ -122,7 +123,8 @@ function double(numCards: number,
                 setPlayerHand: Function,
                 playerScore: string,
                 setPlayerScore: Function,
-                setDealerTurn: Function) {
+                setDealerTurn: Function,
+                savePlayerScore: Function) {
 // add one card and then stand and double money. move onto dealer after.
   const card: number[] = getCard();
 
@@ -140,7 +142,7 @@ function double(numCards: number,
   setPlayerScore(`${Number(playerScore)+cardID}`);
 
   setNumCards(numCards + 1);
-  stand(setPlayerScore, playerScore, setDealerTurn);
+  stand(savePlayerScore, playerScore, setDealerTurn);
 }
 
 function hit(numCards: number,

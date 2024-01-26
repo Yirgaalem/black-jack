@@ -7,7 +7,7 @@ export default () => {
     <>
       <div className='container'>
         <div>
-          <div className='loser'>Loser!</div>
+          <div className='screen'>Loser!</div>
         </div>
         <div>  
           <div>Thanks for the money</div>

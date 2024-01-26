@@ -7,11 +7,10 @@ export default () => {
     <>
       <div className='container'>
         <div>
-          <div className='push'>Push, guess that will do</div>
+          <div className='screen'>Push, guess that will do</div>
         </div>
         <img src={Push}/>
       </div>
-      
     </>
   );
 }
