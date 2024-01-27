@@ -5,11 +5,11 @@ export default () => {
 
   return (
     <>
-      <div className='container'>
+      <div className='screenContainer'>
         <div>
           <div className='blackjack'>Congrats!</div>
         </div>
-        <img src={BlackJack}/>
+        <img className='blackJackImage' src={BlackJack}/>
       </div>
       
     </>

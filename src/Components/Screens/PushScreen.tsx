@@ -5,11 +5,11 @@ export default () => {
 
   return (
     <>
-      <div className='container'>
+      <div className='screenContainer'>
         <div>
           <div className='screen'>Push, guess that will do</div>
         </div>
-        <img src={Push}/>
+        <img className='pushImage' src={Push}/>
       </div>
     </>
   );

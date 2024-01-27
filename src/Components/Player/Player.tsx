@@ -81,7 +81,7 @@ export default (props: playerProps) => {
   
   return (
     <>
-      <div>
+      <div className='cardScoreContainer'>
         <div className = 'cards'>
           {playerHand}
         </div>

@@ -76,7 +76,7 @@ export default (props: dealerProps) => {
 
   return (
     <>
-      <div>
+      <div className='cardScoreContainer'>
         <div className = 'cards'>
           {dealerHand}
         </div>

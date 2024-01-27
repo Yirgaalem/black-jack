@@ -47,6 +47,7 @@ export default () => {
     }
   }
 
+  console.log(playerScore, dealerScore);
 
   return (
     <>
@@ -59,7 +60,8 @@ export default () => {
         />
       </div>
       
-      <div>
+    
+      <div className='playerCards'>
         <Player cardOne={playerCardOne}
                 cardTwo={playerCardTwo}
                 playerScore={playerScore => setPlayerScore(playerScore)}

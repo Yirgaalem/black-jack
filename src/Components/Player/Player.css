@@ -1,8 +1,17 @@
-
-.cards{
+.cards {
   display:flex;
 }
 
-.score{
+.score {
+  margin-right: 3rem;
   margin-top: 1rem;
+}
+
+.buttons {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.cardScoreContainer {
+  margin-left: 4rem;
 }

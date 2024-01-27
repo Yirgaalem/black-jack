@@ -1,6 +1,10 @@
 .container {
-  outline: 2px solid #e5e7fa;
   font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.winnerImage {
+  width: 12rem;
+  height: 10rem;
 }
 
 .winner {
