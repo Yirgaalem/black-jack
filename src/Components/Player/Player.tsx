@@ -41,7 +41,6 @@ export default (props: playerProps) => {
       setPlayerScore("21");
       props.playerScore(0);
       props.setDealerTurn(true);
-      // stand(props.playerScore, playerScore, props.setDealerTurn);
     } 
     
     else if (Number(playerScore) < 21) {
@@ -85,7 +84,6 @@ export default (props: playerProps) => {
         <div className = 'cards'>
           {playerHand}
         </div>
-
         <div className = 'score'> Score: {playerScore}</div>
       </div>
 

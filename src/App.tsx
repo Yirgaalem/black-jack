@@ -4,19 +4,15 @@ import { useState } from 'react';
 
 export default () => {
   const initialPage: JSX.Element = (
-  <>
-    <div className='title'>BlackJack !</div>
-    <button onClick={()=> setPageToDisplay(<Table/>)}>Play</button>
-  </>
+  // <>
+  //   <div className='title'>BlackJack !</div>
+  //   <button onClick={()=> setPageToDisplay(<Table/>)}>Play</button>
+  // </>
+  <Table/>
   );
   
   const [pageToDisplay, setPageToDisplay] = useState(initialPage);
 
-  // setTimeout(() => {
-  //   setPageToDisplay(<Table/>);
-  // }, 2200);
-
-  console.log("h")
   return (
     <>
       {pageToDisplay}

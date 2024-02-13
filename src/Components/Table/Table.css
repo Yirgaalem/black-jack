@@ -2,3 +2,12 @@
   margin-bottom: 15rem;
 }
 
+.cardBack {
+  position:absolute;
+  left: 10vw;
+  bottom: 44vh;
+}
+
+.cardBack, .dealerHiddenCard {
+  height: 9rem;
+}

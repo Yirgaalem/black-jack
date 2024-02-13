@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Dealer from '../Dealer/Dealer';
 import { getRandomValue, getRandomSuit } from "../Deck/Deck";
 import Player from '../Player/Player';
+import cardBack from '../../assets/images/card-back.png';
 import LoserScreen from '../Screens/LoserScreen';
 import WinnerScreen from '../Screens/WinnerScreen';
 import BlackJackScreen from '../Screens/BlackJackScreen';
@@ -47,11 +48,10 @@ export default () => {
     }
   }
 
-  console.log(playerScore, dealerScore);
 
   return (
     <>
-    {outcome}
+      {outcome}
       <div className='dealerCards'>
        <Dealer cardOne={dealerCardOne}
                cardTwo={dealerCardTwo}
@@ -60,14 +60,13 @@ export default () => {
         />
       </div>
       
-    
-      <div className='playerCards'>
+      <img className='cardBack' src={cardBack}/>
+
         <Player cardOne={playerCardOne}
                 cardTwo={playerCardTwo}
                 playerScore={playerScore => setPlayerScore(playerScore)}
                 setDealerTurn={dealerTurn => setDealerTurn(dealerTurn)}
         />
-      </div>
     </>
   );
 }

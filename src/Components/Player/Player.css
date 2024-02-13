@@ -1,9 +1,9 @@
 .cards {
   display:flex;
+  width: fit-content;
 }
 
 .score {
-  margin-right: 3rem;
   margin-top: 1rem;
 }
 
@@ -13,5 +13,5 @@
 }
 
 .cardScoreContainer {
-  margin-left: 4rem;
+  margin-left: 4.5rem;
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Card from "../Card/Card";
 import { cardValues, cardSuits, getRandomValue, getRandomSuit } from "../Deck/Deck";
 import './Dealer.css';
+import cardBack from '../../assets/images/card-back.png';
 
 export type dealerProps = {
   cardOne: number[],
@@ -22,10 +23,10 @@ export default (props: dealerProps) => {
   let cardTwoSuit: number = cardTwo[1];
   let cardTwoID: number = cardTwo[2];
 
-  const dealerCards: JSX.Element = (
+  let dealerCards: JSX.Element = (
     <>
       <Card id = {cardOneID} value = {cardValues[cardOneValue]} suit = {cardSuits[cardOneSuit]}/>
-      <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/>
+      <img className='dealerHiddenCard' src={cardBack}/>
     </>
   );
 
@@ -39,7 +40,6 @@ export default (props: dealerProps) => {
       setDealerScore("21");
       stand(props.dealerScore, dealerScore);
     } 
-    
     else if (Number(dealerScore) < 21) {
       setDealerScore(`${dealerScore} / ${Number(dealerScore)+10}`);
 
@@ -63,13 +63,25 @@ export default (props: dealerProps) => {
     stand(props.dealerScore, dealerScore);
   }
   
-  if (props.dealerTurn && Number(dealerScore) < 17) {
-    hit(
-      dealerHand, 
-      setDealerHand, 
-      dealerScore, 
-      setDealerScore
-    );
+  if (props.dealerTurn) {
+    /**Need to figure out how to set the state of the cards to show the hidden card. Running into errors, I think its just a can't re-render too many times */\
+    /*Acc not sure */
+    // dealerCards = (
+    //   <>
+    //     <Card id = {cardOneID} value = {cardValues[cardOneValue]} suit = {cardSuits[cardOneSuit]}/>
+    //     <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/>
+    //   </>
+    // );
+    // setDealerHand(dealerCards);
+
+    if (Number(dealerScore) < 17) {
+      hit(
+        dealerHand, 
+        setDealerHand, 
+        dealerScore, 
+        setDealerScore
+      );
+    }
   } else {
       stand(props.dealerScore, dealerScore);
   }
@@ -119,7 +131,5 @@ function hit(dealerHand: JSX.Element,
 
 function stand(setDealerScore: Function, 
                dealerScore: string){
-              //  dealerTurn: Boolean) {
   setDealerScore(Number(dealerScore));
-  // dealerTurn(false);
 }
