@@ -124,7 +124,34 @@ function hit(dealerHand: JSX.Element,
   let cardValue: number = card[0];
   let cardSuit: number = card[1];
   let cardID: number = card[2];
- 
+  if (cardID == 1) {
+    // Check if _ is included in playerScore
+    if (!dealerScore.includes('/')) {
+      const score: number = Number(dealerScore);
+      console.log(score)
+      if (score == 10) {
+        setDealerScore('21');    
+      } 
+      else if (score < 10) {
+        setDealerScore(`${score+1}/${score+11}`);
+      } 
+      else if (score > 10) { 
+        setDealerScore(`${score+1}`);
+      } 
+    } else {
+      const score: string[] = dealerScore.split('/');
+      console.log(score)
+      if (score[0] == '10') {
+        setDealerScore('21');
+      } else {
+        const part1: string = `${score[0]+1} / ${score[1]+1}`
+        setDealerScore(part1);
+      }
+    }
+
+  } else {
+    setDealerScore(`${Number(dealerScore)+cardID}`);
+  }
   setDealerHand(
     <>
       {dealerHand}
@@ -132,7 +159,6 @@ function hit(dealerHand: JSX.Element,
     </>
   );
 
-  setDealerScore(`${Number(dealerScore) + cardID}`);
 }
 
 function stand(setDealerScore: Function, 

@@ -55,13 +55,14 @@ export default (props: playerProps) => {
   /* BUTTONS */
   let splitButton: JSX.Element = (<button className='split' onClick={split}>Split</button>);;
   let doubleButton: JSX.Element = (<button className='double' onClick={() => double(numCards,
-                                  setNumCards,
-                                  playerHand, 
-                                  setPlayerHand, 
-                                  playerScore, 
-                                  setPlayerScore,
-                                  props.setDealerTurn,
-                                  props.playerScore,
+                                                                                    setNumCards,
+                                                                                    playerHand, 
+                                                                                    setPlayerHand, 
+                                                                                    playerScore, 
+                                                                                    setPlayerScore,
+                                                                                    props.setDealerTurn,
+                                                                                    props.playerScore,
+                                                                                    buttons
                                   )
                                   }>Double</button> 
                                 );
@@ -82,7 +83,7 @@ export default (props: playerProps) => {
                                                 playerScore, 
                                                 setPlayerScore
                                                 )
-                                                }>Hit</button>
+                                      }>Hit</button>
 
       <button className='stand' onClick={() => stand(props.playerScore, playerScore, props.setDealerTurn, buttons)}>Stand</button>
 
@@ -161,7 +162,35 @@ function hit(numCards: number,
   let cardValue: number = card[0];
   let cardSuit: number = card[1];
   let cardID: number = card[2];
- 
+  console.log(cardID)
+  if (cardID == 1) {
+    // Check if _ is included in playerScore
+    if (!playerScore.includes('/')) {
+      const score: number = Number(playerScore);
+      console.log(score)
+      if (score == 10) {
+        setPlayerScore('21');    
+      } 
+      else if (score < 10) {
+        setPlayerScore(`${score+1}/${score+11}`);
+      } 
+      else if (score > 10) { 
+        setPlayerScore(`${score+1}`);
+      } 
+    } else {
+      const score: string[] = playerScore.split('/');
+      console.log(score)
+      if (score[0] == '10') {
+        setPlayerScore('21');
+      } else {
+        const part1: string = `${score[0]+1} / ${score[1]+1}`
+        setPlayerScore(part1);
+      }
+    }
+
+  } else {
+    setPlayerScore(`${Number(playerScore)+cardID}`);
+  }
   setPlayerHand(
     <>
       {playerHand}
@@ -169,7 +198,6 @@ function hit(numCards: number,
     </>
   );
 
-  setPlayerScore(`${Number(playerScore)+cardID}`);
   
   setNumCards(numCards + 1);
 }
@@ -178,7 +206,7 @@ function stand(setPlayerScore: Function,
                playerScore: string,
                setDealerTurn: Function,
                buttons: JSX.Element) {
-                
+
   setPlayerScore(Number(playerScore));
   setDealerTurn(1);
   buttons = (<></>)
