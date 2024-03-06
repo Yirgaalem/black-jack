@@ -32,8 +32,14 @@ export default (props: dealerProps) => {
 
   const [dealerHand, setDealerHand] = useState(dealerCards)  
   
-  const [dealerScore, setDealerScore] = useState(`${cardOneID + cardTwoID}`);
+  const [dealerScore, setDealerScore] = useState(`${cardOneID}`);
   
+  const [firstDealerAppearance, setFirstDealerAppearance] = useState(true);
+
+  let score: JSX.Element = (
+    <div className = 'score'> Score: {dealerScore}</div>
+  );
+
   if (cardOneID == 1 || cardTwoID == 1) {
 
     if (dealerScore == "11" ) {
@@ -62,30 +68,31 @@ export default (props: dealerProps) => {
   else if (Number(dealerScore) >= 17) {
     stand(props.dealerScore, dealerScore);
   }
-  
-  if (props.dealerTurn) {
-    /**Need to figure out how to set the state of the cards to show the hidden card. Running into errors, I think its just a can't re-render too many times */\
-    /*Acc not sure */
-    // dealerCards = (
-    //   <>
-    //     <Card id = {cardOneID} value = {cardValues[cardOneValue]} suit = {cardSuits[cardOneSuit]}/>
-    //     <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/>
-    //   </>
-    // );
-    // setDealerHand(dealerCards);
 
-    if (Number(dealerScore) < 17) {
-      hit(
-        dealerHand, 
-        setDealerHand, 
-        dealerScore, 
-        setDealerScore
-      );
-    }
-  } else {
-      stand(props.dealerScore, dealerScore);
+  if (props.dealerTurn && firstDealerAppearance){
+    console.log(cardOneID)
+    dealerCards = (
+      <>
+        <Card id = {cardOneID} value = {cardValues[cardOneValue]} suit = {cardSuits[cardOneSuit]}/>
+        <Card id = {cardTwoID} value = {cardValues[cardTwoValue]} suit = {cardSuits[cardTwoSuit]}/>
+      </>
+    );
+    setDealerScore(`${cardOneID + cardTwoID}`);
+    setDealerHand(dealerCards);
+    setFirstDealerAppearance(false);
+  } 
+
+  if (!firstDealerAppearance && Number(dealerScore) < 17) {
+    hit(
+      dealerHand, 
+      setDealerHand, 
+      dealerScore, 
+      setDealerScore
+    );
   }
-
+  
+  stand(props.dealerScore, dealerScore);
+  
   return (
     <>
       <div className='cardScoreContainer'>
@@ -93,7 +100,7 @@ export default (props: dealerProps) => {
           {dealerHand}
         </div>
 
-        <div className = 'score'> Score: {dealerScore}</div>
+        {score}
       </div>
     </>
   );

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Dealer from '../Dealer/Dealer';
-import { getRandomValue, getRandomSuit } from "../Deck/Deck";
 import Player from '../Player/Player';
 import cardBack from '../../assets/images/card-back.png';
 import LoserScreen from '../Screens/LoserScreen';
@@ -9,19 +8,20 @@ import BlackJackScreen from '../Screens/BlackJackScreen';
 import PushScreen from '../Screens/PushScreen';
 import './Table.css';
 
-export default () => {
+export type tableProps = {
+  playerCardOne: number[],
+  playerCardTwo: number[],
+  dealerCardOne: number[], 
+  dealerCardTwo: number[],
+}
+
+export default (props: tableProps) => {
 
   const [playerScore, setPlayerScore] = useState(-1);
   const [dealerScore, setDealerScore] = useState(-1);
-
-  const playerCardOne: number[] = getCard();
-  const playerCardTwo: number[] = getCard();
-
-  const dealerCardOne: number[] = getCard();
-  const dealerCardTwo: number[] = getCard();
-  
+ 
   const [dealerTurn, setDealerTurn] = useState(false);
-
+ 
   let outcome: JSX.Element = (
     <>
     </>
@@ -53,8 +53,8 @@ export default () => {
     <>
       {outcome}
       <div className='dealerCards'>
-       <Dealer cardOne={dealerCardOne}
-               cardTwo={dealerCardTwo}
+       <Dealer cardOne={props.dealerCardOne}
+               cardTwo={props.dealerCardTwo}
                dealerScore={dealerScore => setDealerScore(dealerScore)}
                dealerTurn={dealerTurn}
         />
@@ -62,8 +62,8 @@ export default () => {
       
       <img className='cardBack' src={cardBack}/>
 
-        <Player cardOne={playerCardOne}
-                cardTwo={playerCardTwo}
+        <Player cardOne={props.playerCardOne}
+                cardTwo={props.playerCardTwo}
                 playerScore={playerScore => setPlayerScore(playerScore)}
                 setDealerTurn={dealerTurn => setDealerTurn(dealerTurn)}
         />
@@ -71,10 +71,3 @@ export default () => {
   );
 }
 
-function getCard(): number[] {
-  let cardValue: number = getRandomValue();
-  let cardSuit: number = getRandomSuit();
-  let cardID: number = cardValue < 10 ? cardValue + 1 : 10;
-
-  return [cardValue, cardSuit, cardID];
-}
