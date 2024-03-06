@@ -70,7 +70,6 @@ export default (props: dealerProps) => {
   }
 
   if (props.dealerTurn && firstDealerAppearance){
-    console.log(cardOneID)
     dealerCards = (
       <>
         <Card id = {cardOneID} value = {cardValues[cardOneValue]} suit = {cardSuits[cardOneSuit]}/>
@@ -129,11 +128,11 @@ function hit(dealerHand: JSX.Element,
   setDealerHand(
     <>
       {dealerHand}
-      <Card id = {cardID} value = {cardValues[cardValue]} suit = {cardSuits[cardSuit]}/>
+      <Card id={cardID} value={cardValues[cardValue]} suit={cardSuits[cardSuit]}/>
     </>
   );
 
-  setDealerScore(`${Number(dealerScore)+cardID}`);
+  setDealerScore(`${Number(dealerScore) + cardID}`);
 }
 
 function stand(setDealerScore: Function, 

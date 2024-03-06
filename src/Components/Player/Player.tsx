@@ -52,14 +52,7 @@ export default (props: playerProps) => {
     }
   }
   
-  if (Number(playerScore) > 21) {
-    stand(props.playerScore, playerScore, props.setDealerTurn);
-  } 
-  
-  else if (Number(playerScore) == 21) {
-    stand(props.playerScore, playerScore, props.setDealerTurn);
-  }
-  
+  /* BUTTONS */
   let splitButton: JSX.Element = (<button className='split' onClick={split}>Split</button>);;
   let doubleButton: JSX.Element = (<button className='double' onClick={() => double(numCards,
                                   setNumCards,
@@ -77,6 +70,33 @@ export default (props: playerProps) => {
     splitButton = (<></>)
     doubleButton = (<></>)
   }
+
+  let buttons: JSX.Element = (
+    <div className='buttons'>
+      {doubleButton}
+                                                    
+      <button className='hit' onClick={() => hit(numCards,
+                                                setNumCards,
+                                                playerHand, 
+                                                setPlayerHand, 
+                                                playerScore, 
+                                                setPlayerScore
+                                                )
+                                                }>Hit</button>
+
+      <button className='stand' onClick={() => stand(props.playerScore, playerScore, props.setDealerTurn, buttons)}>Stand</button>
+
+      {splitButton}
+    </div>
+  );
+
+  if (Number(playerScore) > 21) {
+    stand(props.playerScore, playerScore, props.setDealerTurn, buttons);
+  } 
+  
+  else if (Number(playerScore) == 21) {
+    stand(props.playerScore, playerScore, props.setDealerTurn, buttons);
+  }
   
   return (
     <>
@@ -87,22 +107,7 @@ export default (props: playerProps) => {
         <div className = 'score'> Score: {playerScore}</div>
       </div>
 
-      <div className='buttons'>
-        {doubleButton}
-                                                      
-        <button className='hit' onClick={() => hit(numCards,
-                                                  setNumCards,
-                                                  playerHand, 
-                                                  setPlayerHand, 
-                                                  playerScore, 
-                                                  setPlayerScore
-                                                  )
-                                                  }>Hit</button>
-
-        <button className='stand' onClick={() => stand(props.playerScore, playerScore, props.setDealerTurn)}>Stand</button>
-
-        {splitButton}
-      </div>
+      {buttons}
     </>
   );
 }
@@ -122,8 +127,9 @@ function double(numCards: number,
                 playerScore: string,
                 setPlayerScore: Function,
                 setDealerTurn: Function,
-                savePlayerScore: Function) {
-// add one card and then stand and double money. move onto dealer after.
+                savePlayerScore: Function,
+                buttons: JSX.Element) {
+                  
   const card: number[] = getCard();
 
   let cardValue: number = card[0];
@@ -140,7 +146,7 @@ function double(numCards: number,
   setPlayerScore(`${Number(playerScore)+cardID}`);
 
   setNumCards(numCards + 1);
-  stand(savePlayerScore, playerScore, setDealerTurn);
+  stand(savePlayerScore, playerScore, setDealerTurn, buttons);
 }
 
 function hit(numCards: number,
@@ -170,13 +176,15 @@ function hit(numCards: number,
 
 function stand(setPlayerScore: Function, 
                playerScore: string,
-               setDealerTurn: Function) {
+               setDealerTurn: Function,
+               buttons: JSX.Element) {
+                
   setPlayerScore(Number(playerScore));
   setDealerTurn(1);
+  buttons = (<></>)
 }
 
 function split() {
   // Split into two hands and double money
   console.log('split');
 }
-

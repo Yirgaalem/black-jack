@@ -10,17 +10,25 @@ export default () => {
   const dealerCardOne: number[] = getCard();
   const dealerCardTwo: number[] = getCard();
 
+  /*
+  ADD WHEN FINISHED
   const initialPage: JSX.Element = (
-  // <>
-  //   <div className='title'>BlackJack !</div>
-  //   <button onClick={()=> setPageToDisplay(<Table/>)}>Play</button>
-  // </>
-  <Table playerCardOne={playerCardOne}
+  <>
+    <div className='title'>BlackJack !</div>
+    <button onClick={()=> setPageToDisplay(<Table playerCardOne={playerCardOne}
          playerCardTwo={playerCardTwo}
          dealerCardOne={dealerCardOne}
-         dealerCardTwo={dealerCardTwo}/>
+         dealerCardTwo={dealerCardTwo}/>)}>Play</button>
+  </>
   );
-  
+  */
+ const initialPage: JSX.Element = (
+    <Table playerCardOne={playerCardOne}
+           playerCardTwo={playerCardTwo}
+           dealerCardOne={dealerCardOne}
+           dealerCardTwo={dealerCardTwo}/>
+ );
+
   const [pageToDisplay, setPageToDisplay] = useState(initialPage);
 
   return (
