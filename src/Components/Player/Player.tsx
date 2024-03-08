@@ -87,7 +87,7 @@ export default (props: playerProps) => {
 
       <button className='stand' onClick={() => stand(props.playerScore, playerScore, props.setDealerTurn, buttons)}>Stand</button>
 
-      {splitButton}
+      {/* {splitButton} */}
     </div>
   );
 
@@ -171,15 +171,18 @@ function hit(numCards: number,
       if (score == 10) {
         setPlayerScore('21');    
       } 
+
       else if (score < 10) {
         setPlayerScore(`${score+1}/${score+11}`);
       } 
+
       else if (score > 10) { 
         setPlayerScore(`${score+1}`);
-      } 
+      }
+
     } else {
       const score: string[] = playerScore.split('/');
-      console.log(score)
+      
       if (score[0] == '10') {
         setPlayerScore('21');
       } else {
@@ -191,13 +194,13 @@ function hit(numCards: number,
   } else {
     setPlayerScore(`${Number(playerScore)+cardID}`);
   }
+
   setPlayerHand(
     <>
       {playerHand}
       <Card id = {cardID} value = {cardValues[cardValue]} suit = {cardSuits[cardSuit]}/>
     </>
   );
-
   
   setNumCards(numCards + 1);
 }
