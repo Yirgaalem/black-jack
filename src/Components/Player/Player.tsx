@@ -210,7 +210,13 @@ function stand(setPlayerScore: Function,
                setDealerTurn: Function,
                buttons: JSX.Element) {
 
-  setPlayerScore(Number(playerScore));
+  if (playerScore.includes("/")) {
+    const score: number = Number(playerScore.split("/")[1]);
+    setPlayerScore(score);
+  } else {
+    setPlayerScore(Number(playerScore));
+  }
+  
   setDealerTurn(1);
   buttons = (<></>)
 }
